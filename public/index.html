@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Game Vault</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">🕹️ The Game Vault</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <header class="search-header">
+            <h1>Find Your Next Adventure</h1>
+            <div class="search-bar">
+                <input type="text" id="gameSearch" placeholder="Search for a game (e.g., Minecraft)...">
+                <button id="searchBtn">Search</button>
+            </div>
+        </header>
+
+        <div class="game-grid" id="gameGrid">
+            
+            <div class="game-card">
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1x7d.png" alt="Pokemon Emerald Cover" class="game-image">
+                <div class="game-info">
+                    <h3>Pokémon Emerald</h3>
+                    <p>Released: 2004</p>
+                    <p>Rating: 4.5/5</p>
+                    <button class="favorite-btn">❤️ Save to Vault</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1tnm.png" alt="LOTR Return of the King Cover" class="game-image">
+                <div class="game-info">
+                    <h3>The Lord of the Rings: The Return of the King</h3>
+                    <p>Released: 2003</p>
+                    <p>Rating: 4.2/5</p>
+                    <button class="favorite-btn">❤️ Save to Vault</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
