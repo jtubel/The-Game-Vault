@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Help - The Game Vault</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">🕹️ The Game Vault</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="help.html" class="active">Help</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="text-content">
+            <h1>How to Use The Vault</h1>
+            
+            <h2>Searching for Games</h2>
+            <p>Navigate to the Home page and type the name of any video game (e.g., "Halo", "Minecraft", or "Elden Ring") into the search bar. Press the <strong>Search</strong> button or hit Enter to pull up the matching titles from our database.</p>
+            
+            <h2>Saving to Your Vault</h2>
+            <p>Once you find a game you are interested in playing later, simply click the <strong>🤍 Save</strong> button located at the bottom of the game's card. This will eventually send the game's information to your personal Supabase database so you never lose track of your backlog!</p>
+        </div>
+    </main>
+
+</body>
+</html>
