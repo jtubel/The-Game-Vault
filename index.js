@@ -22,32 +22,17 @@ const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey);
 
 // --- API Endpoint for RAWG ---
 app.get('/api/games', async (req, res) => {
-    // Moved API key to the backend for security
-    const apiKey = process.env.RAWG_API_KEY; 
-    
-    // Grab the search term or page number if the frontend sent one
-    const searchQuery = req.query.search;
-    const page = req.query.page;
-
-    // Build the RAWG URL dynamically
-    let rawgUrl = `https://api.rawg.io/api/games?key=${apiKey}`;
-    if (searchQuery) {
-        rawgUrl += `&search=${searchQuery}`;
-    }
-    if (page) {
-        rawgUrl += `&page=${page}&page_size=20`;
-    }
-
     try {
-       // Using Axios instead of fetch
-        const response = await axios.get(rawgUrl);
-        
-        // Axios automatically parses the JSON, so we just send response.data
-        res.json(response.data);
+        const query = req.query.search;
+        const apiKey = process.env.RAWG_API_KEY; 
 
+        const response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${query}`);
+        const data = await response.json();
+        
+        res.json(data); // Send the data back to frontend
     } catch (error) {
-        console.error("Server Error Fetching Games:", error);
-        res.status(500).json({ error: "Failed to fetch games" });
+        console.error('Error fetching from RAWG:', error);
+        res.status(500).send('Server Error Fetching Games');
     }
 });
 
