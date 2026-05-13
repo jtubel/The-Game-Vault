@@ -23,13 +23,17 @@ const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey);
 // --- API Endpoint for RAWG ---
 app.get('/api/games', async (req, res) => {
     try {
-        const query = req.query.search;
+        // Grab the search term, or default to an empty string so it never searches for "undefined" games
+        const query = req.query.search || req.query.q || '';
         const apiKey = process.env.RAWG_API_KEY; 
-
-        const response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${query}`);
+        
+        // URL-Encode the query so spaces (like "Red Dead") don't break the fetch!
+        const encodedQuery = encodeURIComponent(query);
+        
+        const response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${encodedQuery}`);
         const data = await response.json();
         
-        res.json(data); // Send the data back to frontend
+        res.json(data); 
     } catch (error) {
         console.error('Error fetching from RAWG:', error);
         res.status(500).send('Server Error Fetching Games');
