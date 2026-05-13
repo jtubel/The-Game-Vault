@@ -2,6 +2,8 @@
 
 The Game Vault is a full-stack web application that allows users to explore the RAWG video game database and curate a personal collection of titles. 
 
+**Live Demo:** [https://the-game-vault.vercel.app](https://the-game-vault.vercel.app)
+
 ## Project Overview
 This application provides a centralized interface for searching real-time game data and saving specific titles to a persistent collection. The project demonstrates the integration of a Node.js backend with external APIs and a cloud-hosted database.
 
