@@ -117,4 +117,7 @@ app.delete('/api/vault', async (req, res) => {
 // --- Start the Server ---
 app.listen(port, () => {
   console.log(`The Game Vault server is running on http://localhost:${port}`);
+
+// Export the app for Vercel
+module.exports = app;
 });
