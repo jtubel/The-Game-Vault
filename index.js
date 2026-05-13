@@ -56,17 +56,30 @@ app.get('/api/vault', async (req, res) => {
 
 // --- Write Data Endpoint (POST) ---
 app.post('/api/vault', async (req, res) => {
-    // Grab both the name and the image_url
-    const { name, image_url } = req.body; 
+    const { name, image_url } = req.body;
 
-    const { data, error } = await supabase
+    // Check if the game already exists in the database
+    const { data: existingGame } = await supabase
         .from('saved_games')
-        .insert([{ name: name, image_url: image_url }]);
+        .select('name')
+        .eq('name', name)
+        .single();
+
+    if (existingGame) {
+        // Stop the process here and tell the frontend it's a duplicate
+        return res.status(400).json({ error: "This game is already in your vault!" });
+    }
+
+    // If it doesn't exist, proceed with the insert
+    const { error } = await supabase
+        .from('saved_games')
+        .insert([{ name: name, image_url: image_url, status: 'Plan to Buy' }]);
 
     if (error) {
         console.error("Database Error:", error);
         return res.status(500).json({ error: "Failed to save game" });
     }
+    
     res.json({ message: "Game saved successfully!" });
 });
 

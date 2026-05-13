@@ -93,32 +93,41 @@ searchInput.addEventListener('keypress', (e) => {
 
 // Talks to Node backend, then shows SweetAlert
 // Accepts the imageUrl as a second parameter
-async function saveToVault(gameName, imageUrl) {
+async function saveToVault(name, image_url) {
     try {
         const response = await fetch('/api/vault', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // Sends the image_url to the backend
-            body: JSON.stringify({ name: gameName, image_url: imageUrl }) 
+            body: JSON.stringify({ name: name, image_url: image_url })
         });
 
+        const result = await response.json();
+
         if (response.ok) {
+            // Success
             Swal.fire({
                 title: 'Saved!',
-                text: `${gameName} has been added to your Vault.`,
+                text: `${name} has been added to your vault.`,
                 icon: 'success',
-                confirmButtonColor: '#bb86fc',
                 background: '#1e1e1e',
                 color: '#ffffff'
             });
+            loadMiniVault();
         } else {
-            throw new Error('Server rejected save');
+            // This handles the duplicate "400" error or any other server issues
+            Swal.fire({
+                title: 'Notice',
+                text: result.error || 'Could not save the game.',
+                icon: 'info',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            });
         }
     } catch (error) {
         console.error("Error saving to vault:", error);
         Swal.fire({
             title: 'Error',
-            text: 'Could not connect to the database.',
+            text: 'Connection failed.',
             icon: 'error',
             background: '#1e1e1e',
             color: '#ffffff'
