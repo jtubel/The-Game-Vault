@@ -1,15 +1,11 @@
 const express = require('express');
-const cors = require('cors');
 const path = require('path'); 
 const supabaseClient = require('@supabase/supabase-js');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-// Middleware
 app.use(express.json());
-app.use(cors());
 
 // Vercel paths
 app.use(express.static(path.join(__dirname, 'public'))); 
