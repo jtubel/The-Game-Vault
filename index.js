@@ -7,9 +7,6 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Clean Supabase connection 
-const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey);
-
 // Middleware
 app.use(express.json());
 app.use(cors());
