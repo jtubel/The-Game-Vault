@@ -56,23 +56,22 @@ async function loadRandomGames() {
 }
 
 // --- Feature: Search for Specific Games ---
-async function searchGames(query) {
+async function searchGames() {
+    const query = searchInput.value.trim();
+    if (!query) return;
+
+    gameGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Searching for games...</p>';
+
     try {
-        gameGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Searching the vault...</p>';
-        
-        // Asking our OWN server to search for a specific game
-        const response = await fetch(`/api/games?search=${query}`);
+        // Tells the frontend to ask BACKEND for games
+        const response = await fetch(`/api/games?search=${encodeURIComponent(query)}`);
         const data = await response.json();
 
-        // Grab the top 8 results from the search
-        const games = data.results.slice(0, 8);
-        
-        // Draw the searched games!
-        displayGames(games);
-
+        // RAWG sends back an object with a "results" array
+        displayGames(data.results || []);
     } catch (error) {
-        console.error("Error fetching games:", error);
-        gameGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Something went wrong fetching the data.</p>';
+        console.error("Search error:", error);
+        gameGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Error searching games.</p>';
     }
 }
 
