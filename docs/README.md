@@ -18,6 +18,19 @@ This application provides a centralized interface for searching real-time game d
 * Persistent Storage: Personal collection management using a Supabase database.
 * Interactive UI: Modern visual feedback using custom alert notifications and 3D hover effects.
 
+## Technical Considerations
+
+### Data Persistence
+This application utilizes a cloud-hosted Supabase database for storage. Because data is stored on a remote server rather than the browser's local memory, your saved games will persist across different devices and browser sessions. This includes Incognito or Private browsing modes, which normally clear local data but cannot affect information stored in the cloud.
+
+### User Login and Privacy
+In its current state, the application uses a "Global Vault" model. This means all users share a single collection. 
+
+To transition this into a private, multi-user application, the following would be required:
+* Authentication: Implementing a service such as Supabase Auth to allow users to create individual accounts.
+* Row-Level Security (RLS): Configuring database policies to ensure that users can only view or modify data associated with their unique User ID.
+* User-Specific Views: Updating backend queries to filter results based on the logged-in user's credentials.
+
 # Developer Manual
 
 ## Technical Architecture
