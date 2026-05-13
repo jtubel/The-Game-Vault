@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // =Initialize Supabase 
-const supabaseUrl = 'process.env.SUPABASE_URL';
-const supabaseKey = 'process.env.SUPABASE_SECRET_KEY';
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SECRET_KEY;
 const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey, {
     realtime: {
         transport: WebSocket
@@ -24,7 +24,7 @@ const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey, {
 // --- API Endpoint for RAWG ---
 app.get('/api/games', async (req, res) => {
     // Moved API key to the backend for security
-    const apiKey = 'process.env.RAWG_API_KEY'; 
+    const apiKey = process.env.RAWG_API_KEY; 
     
     // Grab the search term or page number if the frontend sent one
     const searchQuery = req.query.search;
