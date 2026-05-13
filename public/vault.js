@@ -35,9 +35,10 @@ async function loadSavedGames() {
                     <h3>${game.name}</h3>
                     
                     <select class="status-dropdown" data-name="${safeName}" onchange="handleDropdown(this)">
-                        <option value="Plan to Buy" ${currentStatus === 'Plan to Buy' ? 'selected' : ''}>⏳ Plan to Buy</option>
-                        <option value="Purchased" ${currentStatus === 'Purchased' ? 'selected' : ''}>💸 Purchased</option>
-                        <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>🏆 Completed</option>
+                        <option value="Plan to Buy" ${currentStatus === 'Plan to Buy' ? 'selected' : ''}>Plan to Buy</option>
+                        <option value="Purchased" ${currentStatus === 'Purchased' ? 'selected' : ''}>Purchased</option>
+                        <option value="In Progress" ${currentStatus === 'In Progress' ? 'selected' : ''}>In Progress</option> 
+                        <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>Completed</option>
                         <option disabled>──────────</option>
                         <option value="REMOVE" style="color: #ff4444;">❌ Remove from Vault</option>
                     </select>
