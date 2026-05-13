@@ -75,7 +75,25 @@ async function searchGames() {
     }
 }
 
+// --- Feature: Search for Random Games ---
+async function fetchDiscoveryGames() {
+    gameGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Discovering games...</p>';
+    try {
+        const response = await fetch('/api/games'); // No query parameter sent
+        const data = await response.json();
+        displayGames(data.results || []);
+    } catch (error) {
+        console.error("Discovery error:", error);
+    }
+}
+
 // --- Event Listeners ---
+
+// Trigger the random "Discovery" batch on page load
+document.addEventListener('DOMContentLoaded', () => {
+    fetchDiscoveryGames();
+    loadMiniVault();
+});
 
 // Trigger search when the button is clicked
 searchBtn.addEventListener('click', () => {
