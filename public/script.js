@@ -28,8 +28,7 @@ function displayGames(games) {
                 <h3>${game.name}</h3>
                 <p>Released: ${releaseYear}</p>
                 <p>Rating: ${game.rating}/5</p>
-                <button class="favorite-btn" onclick="saveToVault('${game.name}')">🤍 Save</button>
-            </div>
+                <button class="favorite-btn" data-name="${game.name.replace(/"/g, '&quot;')}" data-image="${imageUrl}" onclick="saveToVault(this.dataset.name, this.dataset.image)">🤍 Save</button>            </div>
         `;
         gameGrid.appendChild(card);
     });
@@ -42,7 +41,8 @@ async function loadRandomGames() {
         
         // Pick a random page number between 1 and 50 to get a different batch of games every refresh
         const randomPage = Math.floor(Math.random() * 50) + 1;
-        const response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&page=${randomPage}&page_size=20`);
+        // Asking our OWN server for a random page of games
+        const response = await fetch(`/api/games?page=${randomPage}`);
         const data = await response.json();
 
         // Shuffle the 20 results to make it truly random, then grab exactly 8
@@ -63,7 +63,8 @@ async function searchGames(query) {
     try {
         gameGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Searching the vault...</p>';
         
-        const response = await fetch(`https://api.rawg.io/api/games?search=${query}&key=${apiKey}`);
+        // Asking our OWN server to search for a specific game
+        const response = await fetch(`/api/games?search=${query}`);
         const data = await response.json();
 
         // Grab the top 8 results from the search
@@ -94,17 +95,70 @@ searchInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Upgraded function using the SweetAlert2 JS Library
-function saveToVault(gameName) {
-    Swal.fire({
-        title: 'Saved!',
-        text: `${gameName} has been added to your Vault.`,
-        icon: 'success',
-        confirmButtonColor: '#bb86fc',
-        background: '#1e1e1e', // Matches our dark theme
-        color: '#ffffff'
-    });
+// Upgraded function: Talks to Node backend, then shows SweetAlert
+// Accepts the imageUrl as a second parameter
+async function saveToVault(gameName, imageUrl) {
+    try {
+        const response = await fetch('/api/vault', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            // Sends the image_url to the backend
+            body: JSON.stringify({ name: gameName, image_url: imageUrl }) 
+        });
+
+        if (response.ok) {
+            Swal.fire({
+                title: 'Saved!',
+                text: `${gameName} has been added to your Vault.`,
+                icon: 'success',
+                confirmButtonColor: '#bb86fc',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            });
+        } else {
+            throw new Error('Server rejected save');
+        }
+    } catch (error) {
+        console.error("Error saving to vault:", error);
+        Swal.fire({
+            title: 'Error',
+            text: 'Could not connect to the database.',
+            icon: 'error',
+            background: '#1e1e1e',
+            color: '#ffffff'
+        });
+    }
 }
 
-// Automatically run the random game loader the second the page boots up
-window.onload = loadRandomGames;
+// --- Feature: Mini-Vault Header ---
+async function loadMiniVault() {
+    const miniVaultList = document.getElementById('miniVaultList');
+    try {
+        const response = await fetch('/api/vault');
+        const savedGames = await response.json();
+
+        miniVaultList.innerHTML = ''; // Clear the "Loading..." text
+
+        if (savedGames.length === 0) {
+            miniVaultList.innerHTML = '<span class="mini-vault-item">Your vault is empty</span>';
+            return;
+        }
+
+        // Loop through the games and create the little tags
+        savedGames.forEach(game => {
+            const item = document.createElement('span');
+            item.className = 'mini-vault-item';
+            item.innerText = game.name;
+            miniVaultList.appendChild(item);
+        });
+    } catch (error) {
+        console.error("Error fetching mini vault:", error);
+        miniVaultList.innerHTML = '<span class="mini-vault-item">Error loading vault</span>';
+    }
+}
+
+// Automatically run these functions the second the page boots up
+window.onload = () => {
+    loadRandomGames();
+    loadMiniVault(); // Load the header
+};

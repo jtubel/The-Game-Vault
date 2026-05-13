@@ -135,3 +135,83 @@ body {
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+
+/* --- Mini-Vault Header --- */
+.mini-vault-container {
+    background-color: #1e1e1e;
+    padding: 12px 2rem;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 2px solid #bb86fc;
+}
+
+.mini-vault-container h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #bb86fc;
+    white-space: nowrap; /* Keeps the text from wrapping */
+}
+
+.mini-vault-list {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto; /* Allows scrolling if you have dozens of games! */
+    white-space: nowrap;
+    padding-bottom: 4px; /* Room for a custom scrollbar if needed */
+}
+
+.mini-vault-item {
+    background-color: #2c2c2c;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #ffffff;
+    border: 1px solid #444;
+    transition: border-color 0.3s;
+}
+
+.mini-vault-item:hover {
+    border-color: #bb86fc;
+}
+/* --- Vault Card Specific Styling --- */
+/* --- Vault Card Specific Styling --- */
+.vault-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.vault-info {
+    text-align: center;
+    width: 100%;
+}
+
+.vault-info h3 {
+    color: #bb86fc;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+/* --- Status Dropdown --- */
+.status-dropdown {
+    background-color: #2c2c2c;
+    color: white;
+    border: 1px solid #bb86fc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 90%;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.status-dropdown:hover {
+    background-color: #3d3d3d;
+}
+
+.status-dropdown option {
+    background-color: #1e1e1e;
+    color: white;
+}
