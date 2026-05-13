@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const axios = require('axios'); // Import Axios
 const supabaseClient = require('@supabase/supabase-js'); // Import Supabase
@@ -12,8 +14,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // =Initialize Supabase 
-const supabaseUrl = 'https://huqcxdxuenmtgwxlfsbc.supabase.co';
-const supabaseKey = 'sb_secret_nq6cpcce3dYut8s0xi3Gaw_vFMDOJB1';
+const supabaseUrl = 'process.env.SUPABASE_URL';
+const supabaseKey = 'process.env.SUPABASE_SECRET_KEY';
 const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey, {
     realtime: {
         transport: WebSocket
@@ -22,7 +24,7 @@ const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey, {
 // --- API Endpoint for RAWG ---
 app.get('/api/games', async (req, res) => {
     // Moved API key to the backend for security
-    const apiKey = 'b676cef0d2c14ae989a77f9153bdcb3f'; 
+    const apiKey = 'process.env.RAWG_API_KEY'; 
     
     // Grab the search term or page number if the frontend sent one
     const searchQuery = req.query.search;
