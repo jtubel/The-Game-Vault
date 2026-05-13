@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const path = require('path');
 const express = require('express');
 const axios = require('axios'); // Import Axios
 const supabaseClient = require('@supabase/supabase-js'); // Import Supabase
@@ -11,7 +12,11 @@ const port = 3000;
 // Lets Server read JSON data sent from  frontend
 app.use(express.json());
 // Serve static frontend files from the 'public' folder
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // =Initialize Supabase 
 const supabaseUrl = process.env.SUPABASE_URL;
