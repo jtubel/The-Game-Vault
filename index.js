@@ -1,24 +1,28 @@
+const express = require('express');
+const cors = require('cors');
+const path = require('path'); 
+const supabaseClient = require('@supabase/supabase-js');
 require('dotenv').config();
 
-const path = require('path');
-const express = require('express');
-const axios = require('axios'); // Import Axios
-const supabaseClient = require('@supabase/supabase-js'); // Import Supabase
-const WebSocket = require('ws'); // Import ws package
-
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Lets Server read JSON data sent from  frontend
+// Clean Supabase connection 
+const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey);
+
+// Middleware
 app.use(express.json());
-// Serve static frontend files from the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
+// Vercel paths
+app.use(express.static(path.join(__dirname, 'public'))); 
+
+// Explicit Home Route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// =Initialize Supabase 
+// Initialize Supabase 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SECRET_KEY;
 const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey, {
