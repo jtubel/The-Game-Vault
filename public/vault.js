@@ -23,7 +23,7 @@ async function loadSavedGames() {
             // Set default status if it's an older save that doesn't have one yet
             const currentStatus = game.status || 'Plan to Buy';
 
-            // We safely format the name for the dataset using replace
+            // Format the name for the dataset using replace
             const safeName = game.name.replace(/"/g, '&quot;');
 
             // If it's an old save without an image, use a placeholder
@@ -55,12 +55,12 @@ async function loadSavedGames() {
     }
 }
 
-// --- NEW: Handle the Dropdown Actions ---
+// --- Handle the Dropdown Actions ---
 async function handleDropdown(selectElement) {
     const gameName = selectElement.dataset.name;
     const action = selectElement.value;
 
-    // 1. If the user clicks "Remove"
+    // If the user clicks "Remove"
     if (action === 'REMOVE') {
         // Use SweetAlert to double-check before deleting!
         const result = await Swal.fire({
@@ -90,7 +90,7 @@ async function handleDropdown(selectElement) {
         }
     } 
     
-    // 2. If the user just changed the status (Plan/Purchased/Completed)
+    // If the user just changed the status (Plan/Purchased/Completed)
     else {
         await fetch('/api/vault', {
             method: 'PUT',

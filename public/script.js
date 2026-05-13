@@ -1,6 +1,3 @@
-// Your RAWG API Key
-const apiKey = 'b676cef0d2c14ae989a77f9153bdcb3f'; 
-
 const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('gameSearch');
 const gameGrid = document.getElementById('gameGrid');
@@ -49,7 +46,7 @@ async function loadRandomGames() {
         let shuffledGames = data.results.sort(() => 0.5 - Math.random());
         let eightRandomGames = shuffledGames.slice(0, 8);
 
-        // Draw the 8 random games!
+        // Draw the 8 random games
         displayGames(eightRandomGames);
 
     } catch (error) {
@@ -95,7 +92,7 @@ searchInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Upgraded function: Talks to Node backend, then shows SweetAlert
+// Talks to Node backend, then shows SweetAlert
 // Accepts the imageUrl as a second parameter
 async function saveToVault(gameName, imageUrl) {
     try {

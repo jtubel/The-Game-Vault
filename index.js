@@ -27,7 +27,7 @@ app.get('/api/games', async (req, res) => {
         const query = req.query.search || req.query.q || '';
         const apiKey = process.env.RAWG_API_KEY; 
         
-        // URL-Encode the query so spaces (like "Red Dead") don't break the fetch!
+        // URL-Encode the query so spaces (like "Red Dead") don't break the fetch
         const encodedQuery = encodeURIComponent(query);
         
         const response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${encodedQuery}`);
